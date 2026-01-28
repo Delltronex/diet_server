@@ -7,16 +7,15 @@ dotenv.config();
 
 const app = express();
 
-// middleware
+// Allow requests from anywhere (safe for demo/project)
 app.use(cors());
 app.use(express.json());
 
-// routes
 app.use("/api/ai", aiRoutes);
 
-// IMPORTANT: Render-compatible port
-const PORT = process.env.PORT || 5000;
+// Render provides PORT automatically
+const PORT = process.env.PORT;
 
 app.listen(PORT, () => {
-  console.log(`🚀 Groq backend running on port ${PORT}`);
+  console.log(`🚀 Backend running on Render on port ${PORT}`);
 });
