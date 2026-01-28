@@ -39,7 +39,9 @@ No markdown.
 No medical claims.
 Use Indian foods.
 Follow format exactly.
-give not possible if age grater than 150
+Prefer Indian-friendly foods when possible.
+Keep quantities realistic and easy to understand.
+give not possible if age grater than 150.
 
 FORMAT:
 DIET_PLAN:
@@ -52,6 +54,11 @@ INSIGHTS:
 - Point 1
 - Point 2
 - Point 3
+
+CONTENT GUIDELINES:
+- Diet plan should match the calorie and macro targets approximately.
+- Use foods commonly available in India.
+- Insights should be practical lifestyle tips (hydration, consistency, balance).
 `;
 
     const completion = await groq.chat.completions.create({
