@@ -1,18 +1,23 @@
 import dotenv from "dotenv";
-dotenv.config(); // 👈 MUST be here
+dotenv.config();
 
 import express from "express";
 import Groq from "groq-sdk";
 
 const router = express.Router();
 
+// Groq client
 const groq = new Groq({
-  apiKey: process.env.GROQ_API_KEY, // ✅ now available
+  apiKey: process.env.GROQ_API_KEY,
 });
 
 router.post("/diet-plan", async (req, res) => {
   try {
     const { formData, results } = req.body;
+
+    if (!formData || !results) {
+      return res.status(400).json({ error: "Invalid request data" });
+    }
 
     const prompt = `
 You are a professional nutritionist.
@@ -35,15 +40,13 @@ Fats: ${results.macros.fats}g
 
 RULES (VERY IMPORTANT):
 1. Do NOT use markdown.
-2. Do NOT use **, *, bullets with symbols, or headings with formatting.
-3. Use simple, clear English.
-4. No medical diagnosis or medical claims.
-5. Prefer Indian-friendly foods when possible.
-6. Keep quantities realistic and easy to understand.
-7. Output must follow the EXACT format below.
-8. Do NOT add extra sections or explanations outside the format.
+2. Do NOT use symbols like ** or *.
+3. Use simple English.
+4. No medical diagnosis.
+5. Prefer Indian foods.
+6. Follow the exact format.
 
-FORMAT (FOLLOW EXACTLY):
+FORMAT:
 
 DIET_PLAN:
 Breakfast:
@@ -55,11 +58,6 @@ INSIGHTS:
 - Point 1
 - Point 2
 - Point 3
-
-CONTENT GUIDELINES:
-- Diet plan should match the calorie and macro targets approximately.
-- Use foods commonly available in India (rice, roti, dal, vegetables, fruits, nuts, curd, paneer, eggs if allowed).
-- Insights should be practical lifestyle tips (hydration, consistency, balance).
 `;
 
     const completion = await groq.chat.completions.create({
@@ -72,8 +70,8 @@ CONTENT GUIDELINES:
       text: completion.choices[0].message.content,
     });
 
-  } catch (err) {
-    console.error(err);
+  } catch (error) {
+    console.error("Groq error:", error);
     res.status(500).json({ error: "Groq AI failed" });
   }
 });
