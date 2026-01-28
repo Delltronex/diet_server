@@ -1,12 +1,8 @@
-import dotenv from "dotenv";
-dotenv.config();
-
 import express from "express";
 import Groq from "groq-sdk";
 
 const router = express.Router();
 
-// Groq client
 const groq = new Groq({
   apiKey: process.env.GROQ_API_KEY,
 });
@@ -16,7 +12,7 @@ router.post("/diet-plan", async (req, res) => {
     const { formData, results } = req.body;
 
     if (!formData || !results) {
-      return res.status(400).json({ error: "Invalid request data" });
+      return res.status(400).json({ error: "Missing input data" });
     }
 
     const prompt = `
@@ -38,16 +34,13 @@ Protein: ${results.macros.protein}g
 Carbs: ${results.macros.carbs}g
 Fats: ${results.macros.fats}g
 
-RULES (VERY IMPORTANT):
-1. Do NOT use markdown.
-2. Do NOT use symbols like ** or *.
-3. Use simple English.
-4. No medical diagnosis.
-5. Prefer Indian foods.
-6. Follow the exact format.
+RULES:
+No markdown.
+No medical claims.
+Use Indian foods.
+Follow format exactly.
 
 FORMAT:
-
 DIET_PLAN:
 Breakfast:
 Lunch:
@@ -71,8 +64,8 @@ INSIGHTS:
     });
 
   } catch (error) {
-    console.error("Groq error:", error);
-    res.status(500).json({ error: "Groq AI failed" });
+    console.error("Groq Error:", error);
+    res.status(500).json({ error: "AI generation failed" });
   }
 });
 
