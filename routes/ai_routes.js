@@ -39,6 +39,7 @@ No markdown.
 No medical claims.
 Use Indian foods.
 Follow format exactly.
+give not possible if age grater than 150
 
 FORMAT:
 DIET_PLAN:
