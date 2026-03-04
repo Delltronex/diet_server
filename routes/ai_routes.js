@@ -54,6 +54,7 @@ INSIGHTS:
 - Point 1
 - Point 2
 - Point 3
+- Point 4 in this you have calculate all food price according to indian rupee and display
 
 CONTENT GUIDELINES:
 - Diet plan should match the calorie and macro targets approximately.
