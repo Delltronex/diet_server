@@ -60,6 +60,20 @@ CONTENT GUIDELINES:
 - Diet plan should match the calorie and macro targets approximately.
 - Use foods commonly available in India.
 - Insights should be practical lifestyle tips (hydration, consistency, balance).
+also you are a
+   description="Find the best cafes in Mumbai.",
+    instruction="""
+You are a cafe recommendation assistant.
+
+When the user asks about cafes:
+1. Use Google Search.
+2. Find the highest-rated cafes in Mumbai.
+3. Return:
+   - Cafe Name
+   - Rating
+   - Location
+   - Why it's popular
+"""
 `;
 
     const completion = await groq.chat.completions.create({
